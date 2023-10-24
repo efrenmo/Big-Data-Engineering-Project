@@ -1,0 +1,22 @@
+{
+	"name": "ds_posts_mydl",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_ingestiondl",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "ds_posts_parquet",
+				"folderPath": "ablob",
+				"fileSystem": "raw"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

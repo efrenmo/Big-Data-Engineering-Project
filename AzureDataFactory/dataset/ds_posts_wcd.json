@@ -1,0 +1,90 @@
+{
+	"name": "ds_posts_wcd",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_ablob_wcd",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Posts_today",
+				"container": "de-project-st"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "id",
+				"type": "INT32"
+			},
+			{
+				"name": "AcceptedAnswerId",
+				"type": "INT32"
+			},
+			{
+				"name": "AnswerCount",
+				"type": "INT32"
+			},
+			{
+				"name": "Body",
+				"type": "UTF8"
+			},
+			{
+				"name": "CommentCount",
+				"type": "INT32"
+			},
+			{
+				"name": "CreationDate",
+				"type": "DATE"
+			},
+			{
+				"name": "FavoriteCount",
+				"type": "INT32"
+			},
+			{
+				"name": "LastEditDate",
+				"type": "DATE"
+			},
+			{
+				"name": "LastEditorDisplayName",
+				"type": "UTF8"
+			},
+			{
+				"name": "LastEditorUserId",
+				"type": "INT32"
+			},
+			{
+				"name": "OwnerUserId",
+				"type": "INT32"
+			},
+			{
+				"name": "ParentId",
+				"type": "INT32"
+			},
+			{
+				"name": "PostTypeId",
+				"type": "INT32"
+			},
+			{
+				"name": "Score",
+				"type": "FLOAT"
+			},
+			{
+				"name": "Tags",
+				"type": "UTF8"
+			},
+			{
+				"name": "Title",
+				"type": "UTF8"
+			},
+			{
+				"name": "ViewCount",
+				"type": "INT32"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

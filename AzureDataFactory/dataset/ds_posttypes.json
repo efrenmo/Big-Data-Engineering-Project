@@ -1,0 +1,17 @@
+{
+	"name": "ds_posttypes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pg_rds_wcd",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "PostgreSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "raw_st",
+			"table": "posttypes"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

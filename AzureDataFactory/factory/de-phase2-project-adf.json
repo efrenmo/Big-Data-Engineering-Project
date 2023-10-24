@@ -1,0 +1,9 @@
+{
+	"name": "de-phase2-project-adf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "be9a00ff-3926-41d7-a096-16f95a324323",
+		"tenantId": "19dfd98e-3eda-497b-b01d-daa6c85dcc4f"
+	}
+}
