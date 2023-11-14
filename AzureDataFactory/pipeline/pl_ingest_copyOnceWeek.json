@@ -5,7 +5,14 @@
 			{
 				"name": "get_posttypes",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "delete_posttypes",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.01:00:00",
 					"retry": 0,
@@ -55,7 +62,14 @@
 			{
 				"name": "get_users",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "delete_users",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.01:00:00",
 					"retry": 0,
@@ -101,6 +115,56 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "delete_posttypes",
+				"type": "Delete",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_posttypes_stg",
+						"type": "DatasetReference"
+					},
+					"enableLogging": false,
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"fileListPath": "de-bd-project/Landing/PostTypes",
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "delete_users",
+				"type": "Delete",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_users_stg",
+						"type": "DatasetReference"
+					},
+					"enableLogging": false,
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"fileListPath": "de-bd-project/Landing/Users",
+						"enablePartitionDiscovery": false
+					}
+				}
 			}
 		],
 		"annotations": [],
