@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "ds_posts_parquet",
+				"fileName": "ds_posts_parquet_stg",
 				"folderPath": "Landing/Posts",
 				"fileSystem": "de-bd-project"
 			},
