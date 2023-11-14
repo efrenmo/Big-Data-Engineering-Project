@@ -5,14 +5,17 @@
 			"referenceName": "ls_adls_ingestiondl",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "DE-BD-Project/Staging"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "ds_posttypes_csv.csv",
-				"folderPath": "pg",
-				"fileSystem": "raw"
+				"fileName": "ds_posttypes_stg.csv",
+				"folderPath": "Landing/PostTypes",
+				"fileSystem": "de-bd-project"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

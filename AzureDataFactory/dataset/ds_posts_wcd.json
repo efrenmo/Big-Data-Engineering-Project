@@ -5,6 +5,9 @@
 			"referenceName": "ls_ablob_wcd",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "DE-BD-Project/Source"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {

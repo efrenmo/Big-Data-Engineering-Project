@@ -5,6 +5,9 @@
 			"referenceName": "ls_adls_ingestiondl",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "DE-BD-Project/Staging"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
