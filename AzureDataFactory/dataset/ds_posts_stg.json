@@ -1,5 +1,5 @@
 {
-	"name": "ds_posts_mydl",
+	"name": "ds_posts_stg",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adls_ingestiondl",
@@ -14,8 +14,8 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "ds_posts_parquet",
-				"folderPath": "ablob",
-				"fileSystem": "raw"
+				"folderPath": "Landing/Posts",
+				"fileSystem": "de-bd-project"
 			},
 			"compressionCodec": "snappy"
 		},

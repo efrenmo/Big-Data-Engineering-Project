@@ -1,5 +1,5 @@
 {
-	"name": "ds_posttypes",
+	"name": "ds_posttypes_wcd",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_pg_rds_wcd",

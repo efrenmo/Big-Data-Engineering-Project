@@ -1,5 +1,5 @@
 {
-	"name": "ds_users_csv",
+	"name": "ds_users_stg",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adls_ingestiondl",
@@ -13,9 +13,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "ds_users_csv",
-				"folderPath": "pg",
-				"fileSystem": "raw"
+				"fileName": "ds_users_stg.csv",
+				"folderPath": "Landing/Users",
+				"fileSystem": "de-bd-project"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

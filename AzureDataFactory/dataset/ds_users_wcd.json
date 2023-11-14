@@ -1,5 +1,5 @@
 {
-	"name": "ds_users",
+	"name": "ds_users_wcd",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_pg_rds_wcd",

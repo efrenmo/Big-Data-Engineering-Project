@@ -72,7 +72,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_posts_mydl",
+						"referenceName": "ds_posts_stg",
 						"type": "DatasetReference"
 					}
 				]
@@ -91,7 +91,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "ds_posts_mydl",
+						"referenceName": "ds_posts_stg",
 						"type": "DatasetReference"
 					},
 					"logStorageSettings": {
@@ -135,6 +135,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {

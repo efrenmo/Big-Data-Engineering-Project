@@ -41,13 +41,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_posttypes",
+						"referenceName": "ds_posttypes_wcd",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_posttypes_csv",
+						"referenceName": "ds_posttypes_stg",
 						"type": "DatasetReference"
 					}
 				]
@@ -91,13 +91,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_users",
+						"referenceName": "ds_users_wcd",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_users_csv",
+						"referenceName": "ds_users_stg",
 						"type": "DatasetReference"
 					}
 				]
