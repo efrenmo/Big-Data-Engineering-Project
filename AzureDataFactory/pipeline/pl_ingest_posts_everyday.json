@@ -142,6 +142,33 @@
 						"type": "ParquetReadSettings"
 					}
 				}
+			},
+			{
+				"name": "Model Inference",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Get Posts",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/bobifamily@outlook.com/de-bd-project/Model Deployment 2023-11-27 21:56"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": [],
