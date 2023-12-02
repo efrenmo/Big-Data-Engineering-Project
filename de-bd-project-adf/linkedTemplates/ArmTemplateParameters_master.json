@@ -8,6 +8,9 @@
 		"AmazonS31_secretAccessKey": {
 			"value": ""
 		},
+		"AzureDatabricks1_accessToken": {
+			"value": ""
+		},
 		"ls_ablob_dephase2projectdsa_connectionString": {
 			"value": ""
 		},
@@ -19,6 +22,9 @@
 		},
 		"AmazonS31_properties_typeProperties_accessKeyId": {
 			"value": "AKIAV4NG4RPRG2356OOP"
+		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"value": "1111-003211-vjo6l91r"
 		},
 		"ls_adls_ingestiondl_properties_typeProperties_url": {
 			"value": "https://debdingestiondl.dfs.core.windows.net/"

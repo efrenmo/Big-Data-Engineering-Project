@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'secretAccessKey' of 'AmazonS31'"
 		},
+		"AzureDatabricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+		},
 		"ls_ablob_dephase2projectdsa_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_ablob_dephase2projectdsa'"
@@ -26,6 +30,10 @@
 		"AmazonS31_properties_typeProperties_accessKeyId": {
 			"type": "string",
 			"defaultValue": "AKIAV4NG4RPRG2356OOP"
+		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1111-003211-vjo6l91r"
 		},
 		"ls_adls_ingestiondl_properties_typeProperties_url": {
 			"type": "string",
@@ -61,6 +69,9 @@
 					"AmazonS31_secretAccessKey": {
 						"value": "[parameters('AmazonS31_secretAccessKey')]"
 					},
+					"AzureDatabricks1_accessToken": {
+						"value": "[parameters('AzureDatabricks1_accessToken')]"
+					},
 					"ls_ablob_dephase2projectdsa_connectionString": {
 						"value": "[parameters('ls_ablob_dephase2projectdsa_connectionString')]"
 					},
@@ -72,6 +83,9 @@
 					},
 					"AmazonS31_properties_typeProperties_accessKeyId": {
 						"value": "[parameters('AmazonS31_properties_typeProperties_accessKeyId')]"
+					},
+					"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks1_properties_typeProperties_existingClusterId')]"
 					},
 					"ls_adls_ingestiondl_properties_typeProperties_url": {
 						"value": "[parameters('ls_adls_ingestiondl_properties_typeProperties_url')]"

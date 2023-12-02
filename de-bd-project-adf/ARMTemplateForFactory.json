@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'secretAccessKey' of 'AmazonS31'"
 		},
+		"AzureDatabricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+		},
 		"ls_ablob_dephase2projectdsa_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_ablob_dephase2projectdsa'"
@@ -26,6 +30,10 @@
 		"AmazonS31_properties_typeProperties_accessKeyId": {
 			"type": "string",
 			"defaultValue": "AKIAV4NG4RPRG2356OOP"
+		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1111-003211-vjo6l91r"
 		},
 		"ls_adls_ingestiondl_properties_typeProperties_url": {
 			"type": "string",
@@ -376,6 +384,33 @@
 								"type": "ParquetReadSettings"
 							}
 						}
+					},
+					{
+						"name": "Model Inference",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Get Posts",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/bobifamily@outlook.com/de-bd-project/Model Deployment 2023-11-27 21:56"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks1",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -387,6 +422,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_posts_wcd')]",
 				"[concat(variables('factoryId'), '/datasets/ds_posts_stg')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks1')]",
 				"[concat(variables('factoryId'), '/linkedServices/ls_adls_ingestiondl')]"
 			]
 		},
@@ -643,6 +679,24 @@
 						"value": "[parameters('AmazonS31_secretAccessKey')]"
 					},
 					"authenticationType": "AccessKey"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-3003559256944873.13.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks1_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks1_properties_typeProperties_existingClusterId')]"
 				}
 			},
 			"dependsOn": []
