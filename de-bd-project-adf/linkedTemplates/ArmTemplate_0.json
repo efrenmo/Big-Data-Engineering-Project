@@ -734,7 +734,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Users/bobifamily@outlook.com/de-bd-project/Model Deployment 2023-11-27 21:56"
+							"notebookPath": "/Users/bobifamily@outlook.com/de-bd-project/Model Deployment Latest"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricks1",
@@ -777,8 +777,7 @@
 						"frequency": "Day",
 						"interval": 1,
 						"startTime": "2023-10-29T02:22:00",
-						"timeZone": "Eastern Standard Time",
-						"schedule": {}
+						"timeZone": "Eastern Standard Time"
 					}
 				}
 			},
