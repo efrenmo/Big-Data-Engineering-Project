@@ -19,13 +19,29 @@ To address this need, we designed and implemented a comprehensive data engineeri
 
 Our solution ingests data from two primary sources:
 
-- **AWS RDS PostgreSQL Database**: Contains Users and PostTypes tables with user profiles and post classification information
-- **Azure Blob Storage**: Houses daily Posts data in parquet format, containing the actual content created by users
+1. **AWS RDS PostgreSQL Database**: Contains Users and Post Types tables with user profiles and post classification information
+<p align="center">
+  <img src="Screenshots\tables1.drawio.png" alt="Users and Post Types tables ">
+</p>
 
-The data ingestion layer was implemented using Azure Data Factory (ADF), which orchestrates the entire pipeline. We created two distinct extract-load pipelines:
+2. **Azure Blob Storage**: Houses daily Posts data in parquet format, containing the actual content created by users
+<p align="center">
+  <img src="Screenshots\table2.drawio.png" alt="Post table ">
+</p>
+
+The data ingestion layer was implemented using **Azure Data Factory (ADF)**, which orchestrates the entire pipeline. We created two distinct extract-load pipelines:
 
 1. **Posts Data Pipeline**: Executes daily to capture new content
+
+<p align="center">
+  <img src="Screenshots\daily_pipeline.drawio.svg" alt="Daily Pipeline ">
+</p>
+
 2. **Users and PostTypes Pipeline**: Runs weekly following SCD type 1 methodology (overwriting with latest records)
+
+<p align="center">
+  <img src="Screenshots\weekly_pipeline.drawio.svg" alt="Weekly Pipeline ">
+</p>
 
 For each pipeline, we configured:
 - Source and destination linked services
