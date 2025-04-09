@@ -48,6 +48,10 @@ For each pipeline, we configured:
 - Dataset definitions with appropriate schemas
 - Copy data activities with optimized settings
 
+<p align="center">
+  <img src="Screenshots\copy_activity_details.drawio.svg" alt="Copy Activity Details">
+</p>
+
 ### Data Lake Implementation
 
 We established a hierarchical Azure Data Lake to serve as our central data repository, organized into three logical zones:
@@ -58,28 +62,90 @@ We established a hierarchical Azure Data Lake to serve as our central data repos
 
 This structure ensures data lineage tracking and enables different processing requirements at each stage.
 
-### Data Transformation and ML Processing
+### ML Model Training Process
+Our model training pipeline leverages Databricks for distributed processing and implements a multi-class text classification approach using logistic regression. The training process consists of several key stages:
 
-The transformation phase leverages Azure Databricks with Apache Spark for distributed processing. Our NLP pipeline applies several techniques to prepare text data:
+#### Data Preparation
 
-1. **Text Preprocessing**:
-   - HTML tag removal
-   - Punctuation elimination
-   - Case normalization
-   - Whitespace trimming
+The training data was sourced from Stack Overflow posts stored in our data lake. We performed the following preparation steps:
 
-2. **NLP Feature Engineering**:
-   - Tokenization of text into individual words
-   - Stop word removal to eliminate common words with low semantic value
-   - CountVectorizer implementation to identify frequent terms
-   - TF-IDF (Term Frequency-Inverse Document Frequency) weighting to prioritize significant terms
+- Loaded posts, post types, and user data from parquet files in our data lake.
+- Joined posts with post types to identify question-type content.
+- Filtered the dataset to focus exclusively on questions, as these contain the relevant tags we aim to predict.
+- Transformed the HTML-formatted tags into clean arrays for model training.
+- Saved the prepared dataset as a parquet file for reproducibility.
 
-3. **Machine Learning Implementation**:
-   - Multi-class text classification using Logistic Regression
-   - Label encoding for categorical variables
-   - Model inference on daily post batches
-   - Results appended to Delta Lake with original post metadata
+#### Text Preprocessing
 
+To optimize our NLP model's performance, we implemented a comprehensive text preprocessing pipeline:
+
+- HTML tag removal to extract plain text content.
+- Special character and punctuation elimination.
+- Case normalization to lowercase.
+- Whitespace standardization and trimming.
+- Removal of URLs and non-alphabetic characters.
+
+#### NLP Feature Engineering
+
+The feature engineering process transformed the raw text into ML-ready features:
+
+- **Tokenization:** Split text into individual words.
+- **Stop Word Removal:** Eliminated common words with low semantic value.
+- **HashingTF:** Applied term frequency hashing to convert text to numerical features.
+- **IDF Weighting:** Implemented TF-IDF to prioritize significant terms.
+
+#### ML Model Development
+We implemented a logistic regression classifier with the following characteristics:
+
+- Multi-class classification approach to handle the diverse range of technical topics.
+- StringIndexer to convert categorical tag labels to numerical indices.
+- Pipeline architecture to ensure reproducible preprocessing and model application.
+- Evaluation using MulticlassClassificationEvaluator to measure accuracy.
+
+### ML Model Deployment and Inference
+
+Our model deployment strategy focuses on batch inference integrated with our data pipeline. This approach allows us to process new content regularly and update our analytics platform with fresh insights.
+
+#### Inference Pipeline Architecture
+The inference pipeline consists of several components:
+
+- **Configuration Management:** Centralized configuration to maintain consistency across environments.
+- **Model Loading:** Dynamic loading of the trained PipelineModel and StringIndexerModel from the data lake.
+- **Batch Processing:** Daily processing of new question posts.
+- **Timestamp Tracking:** Each processed batch receives a timestamp for lineage tracking.
+
+#### Data Preprocessing for Inference
+The preprocessing user defined function (UDF) handles the transformation of raw posts data:
+
+- Renames and drops columns to standardize the schema.
+- Filters for question-type posts only.
+- Converts tag strings to arrays.
+- Applies the same text cleaning process used in training:
+  - URL removal
+  - HTML tag stripping
+  - Non-alphabetic character removal
+  - Whitespace normalization
+  - Case conversion
+  - Trimming
+
+#### Prediction Process
+The prediction workflow includes:
+
+- Loading the trained pipeline model from the data lake.
+- Applying the model to the preprocessed batch data.
+- Converting numerical predictions back to human-readable tags using IndexToString.
+- Joining predictions with original post metadata to maintain context
+
+#### Delta Lake Integration
+The inference results are persisted to our Delta Lake for downstream analytics:
+
+- Results are appended to a Delta table with a schema that captures both predictions and original post metadata.
+- Each batch is stamped with processing datetime for tracking.
+- The Delta table is registered in the Hive metastore as stack_overflow_proj.labeled_qs_ext_dtbl.
+- This approach enables ACID transactions and time travel capabilities for our analytics platform.
+
+The integration with Delta Lake ensures that our BI dashboards always have access to the latest tag predictions while maintaining historical data for trend analysis.
+  
 ### Visualization and Analytics
 
 The final component leverages Azure Synapse Analytics to create interactive dashboards that:
