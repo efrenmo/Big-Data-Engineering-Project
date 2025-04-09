@@ -1,12 +1,5 @@
 <h1>Azure Cloud + Databricks NLP Inference Pipeline</h1>
 
-<h2>Project Architecture</h2>
-
-<p align="center">
-  <img src="https://github.com/efrenmo/Big-Data-Engineering-Project/blob/main/Screenshots/bd_project_architecture.drawio.png" />
-</p>
-
-
 ## Project Overview: StackFlow Analytics Platform
 
 Our client, a tech startup aiming to create a developer Q&A platform similar to Stack Overflow, approached us with a critical business challenge. They needed an automated system to analyze post content, assign relevant subject tags, and provide insights on trending topics. This capability would enhance content discovery, improve user experience, and provide valuable business intelligence on user interests and behavior.
@@ -14,6 +7,10 @@ Our client, a tech startup aiming to create a developer Q&A platform similar to 
 To address this need, we designed and implemented a comprehensive data engineering solution leveraging Azure cloud services. Our solution includes an end-to-end pipeline for data ingestion, transformation, machine learning inference, and visualization, enabling automated topic classification of posts and real-time analytics.
 
 ## Architecture and Technical Implementation
+
+<p align="center">
+  <img src="https://github.com/efrenmo/Big-Data-Engineering-Project/blob/main/Screenshots/bd_project_architecture.drawio.png" />
+</p>
 
 ### Data Sources and Ingestion
 
