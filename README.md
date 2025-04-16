@@ -133,13 +133,87 @@ The prediction workflow includes:
 - Converting numerical predictions back to human-readable tags using IndexToString.
 - Joining predictions with original post metadata to maintain context
 
-#### Delta Lake Integration
-The inference results are persisted to our Delta Lake for downstream analytics:
+### Delta Lake Integration
+Delta Lake serves as the backbone of our data persistence and analytics strategy, providing robust, ACID-compliant storage for all machine learning inference results. This integration ensures data reliability, enables time-based analytics, and supports seamless downstream consumption by BI tools.
+<br>
 
-- Results are appended to a Delta table with a schema that captures both predictions and original post metadata.
-- Each batch is stamped with processing datetime for tracking.
-- The Delta table is registered in the Hive metastore as stack_overflow_proj.labeled_qs_ext_dtbl.
-- This approach enables ACID transactions and time travel capabilities for our analytics platform.
+**1. Delta Table Schema and Initialization**
+<br>
+
+We define a comprehensive schema for our predictions, capturing both model outputs (predictions) and original post metadata. The Delta table is created (if it does not exist) using **Spark SQL**:
+
+```sql
+CREATE TABLE IF NOT EXISTS stack_overflow_proj.labeled_qs_ext_dtbl (
+  question_id INT,
+  Text STRING,
+  prediction INT,
+  decoded STRING,
+  AcceptedAnswerId INT,
+  AnswerCount INT,
+  CommentCount INT,
+  CreationDate TIMESTAMP,
+  FavoriteCount INT,
+  LastEditDate TIMESTAMP,
+  LastEditorUserId INT,
+  OwnerUserId INT,
+  PostTypeId INT,
+  Score FLOAT,
+  Tags ARRAY,
+  Title STRING,
+  ViewCount INT,
+  Type STRING,
+  batch_datetime_stamp TIMESTAMP
+)
+USING DELTA
+LOCATION 'dbfs:/mnt/debdingestiondl/de-bd-project/BI/labeled_qs_ext_dtbl'
+```
+This schema enforces data consistency and supports schema evolution as requirements change.                                                                                                                                                  
+<br>
+
+**2. Batch Processing and Timestamping**
+<br>
+
+Each batch of inference results is tagged with a processing timestamp, enabling data lineage and time-based analytics:
+
+```python
+from datetime import datetime
+from pyspark.sql.functions import to_timestamp, lit
+
+batch_processing_date = datetime.now().strftime("%Y_%m_%d_%H")
+final_results_df = results_processed_df.withColumn(
+    'batch_datetime_stamp', 
+    to_timestamp(lit(batch_processing_date), 'yyyy_MM_dd_HH')
+)
+```
+<br>
+
+**3. Writing Inference Results to Delta Lake**
+<br>
+
+Inference results are written to the Delta table in **append** mode, ensuring that each batch is atomically and durably persisted:
+
+```python
+final_results_df.write.format("delta")\
+    .mode("append")\
+    .option("path", f"{bi_folder_path}/labeled_qs_ext_dtbl/labeled_qs_batch_{batch_processing_date}")\
+    .saveAsTable("stack_overflow_proj.labeled_qs_ext_dtbl")
+```
+<br>
+
+- When we used `CREATE TABLE ... USING DELTA LOCATION ...` during initialization, it registers the delta table in the **Hive metastore** making it accessible via SQL and Spark catalog queries.
+- This registration allows us to reference the table by name (*stack_overflow_proj.labeled_qs_ext_dtbl*) in SQL and Spark, rather than by file path.
+
+<br>
+
+**4. Benefits of Delta Lake Integration**
+<br>
+
+- **ACID Transactions:** Guarantees atomicity, consistency, isolation, and durability for all write operations, ensuring that each write is reliable and that the table remains consistent, even in the event of failures. 
+- **Time Travel:** Enables querying of historical data for auditing and model performance comparison.
+- **Schema Enforcement:** Ensures data integrity and supports schema evolution.
+- **Optimized Storage:** Leverages Parquet format for efficient storage and fast analytics.
+- **Seamless Analytics Integration:** Delta tables are immediately queryable by Spark SQL and BI tools.
+
 
 The integration with Delta Lake ensures that our BI dashboards always have access to the latest tag predictions while maintaining historical data for trend analysis.
   
